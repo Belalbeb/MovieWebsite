@@ -1,0 +1,73 @@
+﻿@model Movie
+
+<div class="d-flex justify-content-center my-5">
+    <div asp-validation-summary="All"></div>
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 1000px; min-height: 550px;">
+        <!-- Header -->
+        <div class="card-header bg-info text-white text-center rounded-top-4">
+            <h3 class="mb-0 fw-bold">
+                @Model.Name
+            </h3>
+        </div>
+
+        <div class="row g-0">
+            <!-- Movie Image -->
+            <div class="col-md-6">
+                <img src="/@Model.ImageUrl" class="img-fluid rounded-start-4"
+                     alt="@Model.Name"
+                     style="object-fit: cover; height: 100%; min-height: 550px;">
+            </div>
+
+            <!-- Movie Details -->
+            <div class="col-md-6">
+                <div class="card-body p-4">
+                    <p class="card-text fs-5 text-muted">@Model.Description</p>
+                    <hr />
+                    <p class="card-text fs-5"><b>Cinema:</b> @(Model.Cinema?.Name ?? "No Cinema Assigned")</p>
+                    <p class="card-text fs-5"><b>Category:</b> @Model.MovieCategory</p>
+                    <p class="card-text fs-5"><b>Start Date:</b> @Model.StartDate.ToString("dd MMM yyyy")</p>
+                    <p class="card-text fs-5"><b>End Date:</b> @Model.EndDate.ToString("dd MMM yyyy")</p>
+
+                    <p class="card-text mt-3 fs-5">
+                        <b>Status:</b>
+                        @if (DateTime.Now >= Model.StartDate && DateTime.Now <= Model.EndDate)
+                        {
+                            <span class="badge bg-success fs-6">AVAILABLE</span>
+                        }
+                        else if (DateTime.Now > Model.EndDate)
+                        {
+                            <span class="badge bg-danger fs-6">EXPIRED</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-primary fs-6">UPCOMING</span>
+                        }
+                    </p>
+                </div>
+                <div class="float-end m-4">
+                    <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@Model.Id">Update</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                </div>
+            </div>
+          
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center rounded-bottom-4 p-4">
+            <a class="btn btn-lg btn-outline-primary" asp-action="Index">
+                <i class="bi bi-arrow-left-circle"></i> Back To List
+            </a>
+            <a class="btn btn-lg btn-success text-white @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
+               asp-controller="Orders"
+               asp-action="AddModelToShoppingCart"
+               asp-route-id="@Model.Id">
+                <i class="bi bi-cart-plus"></i> Add to Cart (@Model.Price.ToString("c"))
+            </a>
+        </div>
+    </div>
+</div>
+<div class="text-white" style="position:fixed; right:20px;bottom:25px; ">
+    <a  asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i>Add New
+    </a>
+</div>

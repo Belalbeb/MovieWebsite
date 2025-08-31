@@ -1,0 +1,75 @@
+﻿
+@model List<Movie>
+
+@{
+    ViewData["Title"] = "List of Movies";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <!-- Header -->
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">@item.Name</h5>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="text-white" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    }
+                </div>
+
+                <!-- Body -->
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <img src="/@item.ImageUrl" class="img-fluid h-100 w-100" alt="@item.Name">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            <p><b>Cinema:</b> @item.Cinema.Name</p>
+                            <p><b>Category:</b> @item.MovieCategory</p>
+                            <p><b>Start:</b> @item.StartDate.ToString("dd MMM yy")</p>
+                            <p><b>End:</b> @item.EndDate.ToString("dd MMM yy")</p>
+                            <p>
+                                <b>Status:</b>
+                                @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                                {
+                                    <span class="badge bg-success">AVAILABLE</span>
+                                }
+                                else if (DateTime.Now > item.EndDate)
+                                {
+                                    <span class="badge bg-danger">EXPIRED</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary">UPCOMING</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-primary">@item.Price.ToString("c")</span>
+                    <div>
+                        <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">
+                            <i class="bi bi-eye-fill"></i> Details
+                        </a>
+                        <a class="btn btn-success btn-sm text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")"
+                           asp-controller="Orders"
+                           asp-action="AddItemToShoppingCart"
+                           asp-route-id="@item.Id">
+                            <i class="bi bi-cart-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

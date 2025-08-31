@@ -1,0 +1,51 @@
+﻿@using Ecommerce_App.ViewModel
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    
+    <div class="card shadow-lg p-4 rounded-4" style="width: 400px;">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <h3 class="text-center text-primary mb-4">Register</h3>
+        <form asp-action="Register" method="post">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" placeholder="Enter your name" />
+                <span asp-validation-for="UserName" class="text-danger small"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <!-- Age -->
+            <div class="mb-3">
+                <label asp-for="Age" class="form-label"></label>
+                <input asp-for="Age" class="form-control" placeholder="Enter your age" />
+                <span asp-validation-for="Age"  class="text-danger small"></span>
+            </div>
+
+      
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

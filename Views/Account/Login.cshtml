@@ -1,0 +1,33 @@
+﻿@using Ecommerce_App.ViewModel
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100 ">
+    
+    <div class="card shadow-lg p-4 rounded-4" style="width: 400px;">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <h3 class="text-center text-primary mb-4">Login</h3>
+        <form asp-action="Login" method="post">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" placeholder="Enter your name" />
+                <span asp-validation-for="UserName" class="text-danger small"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your Password" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+            <div class="mb-3 text-center">
+                <input  type="submit" value="Login" class="btn btn-outline-info"/>
+            </div>
+
+        </form>
+</div>
+</div>   

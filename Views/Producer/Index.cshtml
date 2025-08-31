@@ -1,0 +1,59 @@
+﻿@model List<Producer>
+
+@{
+    ViewData["Title"] = "List Of Producers";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-info mb-4">Producers</h2>
+
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <table class="table table-bordered table-hover text-center align-middle shadow-sm">
+                <thead class="table-info">
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>Full Name</th>
+                        <th>Biography</th>
+                        <th style="width: 250px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="/@item.ProfilePictureUrl"
+                                     class="rounded-circle shadow-sm border border-2 border-info"
+                                     style="height:80px; width:80px; object-fit:cover;"
+                                     alt="@item.FullName" />
+                            </td>
+                            <td><strong>@item.FullName</strong></td>
+                            <td class="text-muted">@item.Bio</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary me-1"
+                                   asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a class="btn btn-sm btn-outline-info me-1"
+                                   asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye"></i> Details
+                                </a>
+                                <a class="btn btn-sm btn-danger text-white"
+                                   asp-action="Delete" asp-route-id="@item.Id">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div style="position:fixed; right:20px; bottom:25px;">
+    <a asp-controller="Producer" asp-action="Create" class="btn btn-success shadow-lg">
+        <i class="bi bi-plus-circle"></i> Add New Producer
+    </a>
+</div>
